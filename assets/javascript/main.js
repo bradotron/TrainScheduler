@@ -11,7 +11,7 @@ var config = {
 firebase.initializeApp(config);
 var db = firebase.firestore();
 var trainsRef = db.collection(`trains`);
-var currentTime;
+var now;
 
 $(function() {
   $(`#add-train-btn`).click(onAddTrainBtn);
@@ -85,7 +85,8 @@ var onAddTrainBtn = function() {
 
     $(`#train-name-input`).val(``);
     $(`#destination-input`).val(``);
-    $(`#first-train-input`).val(``);
+    $(`#first-train-hours`).val(``);
+    $(`#first-train-minutes`).val(``);
     $(`#frequency-input`).val(``);
   } else {
     $(`#add-train-message`).append(
