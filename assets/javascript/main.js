@@ -18,7 +18,7 @@ $(function() {
 
   trainsRef.onSnapshot(updateCurrentTrainSchedule);
 
-  // TODO: add a setInterval that updates the train schedule every minute
+  setInterval(updateCurrentTrainSchedule, 60000);
 });
 
 var updateCurrentTrainSchedule = function() {
@@ -38,33 +38,28 @@ var appendToTrainSchedule = function(train) {
   myTrain.append($(`<td>`).text(train.name));
   myTrain.append($(`<td>`).text(train.destination));
   myTrain.append($(`<td>`).text(train.frequency));
-  let nextArrival = calculateNextArrival(train.firstTrainTime, train.frequency);
+  let nextArrival = calculateNextArrival(
+    train.firstTrainHours,
+    train.firstTrainMinutes,
+    train.frequency
+  );
   myTrain.append($(`<td>`).text(nextArrival.format(`HH:mm A`)));
   myTrain.append($(`<td>`).text(nextArrival.diff(now, "minutes")));
   $(`#current-train-schedule`).append(myTrain);
 };
 
-var calculateNextArrival = function(firstTrainTime, frequency) {
-  let first = moment();
-  let hour = ``;
-  let minute = ``;
+var calculateNextArrival = function(hours, minutes, frequency) {
+  let myMoment = moment();
+
+  myMoment.hour(parseInt(hours));
+  myMoment.minute(parseInt(minutes));
   frequency = parseInt(frequency);
 
-  if (firstTrainTime.length == 3) {
-    hour = firstTrainTime[0];
-    minute = firstTrainTime[2] + firstTrainTime[3];
-  } else {
-    hour = firstTrainTime[0] + firstTrainTime[1];
-    minute = firstTrainTime[2] + firstTrainTime[3];
-  }
-  first.hour(parseInt(hour));
-  first.minute(parseInt(minute));
-
-  while (first.diff(now, `minutes`) < 0) {
-    first.add(frequency, `minutes`);
+  while (myMoment.diff(now, `minutes`) < 0) {
+    myMoment.add(frequency, `minutes`);
   }
 
-  return first;
+  return myMoment;
 };
 
 var addTrainToDb = function(train) {
@@ -100,29 +95,42 @@ var onAddTrainBtn = function() {
 };
 
 var validateTrainForm = function() {
-  let name = $(`#train-name-input`).val().trim();
-  let destination = $(`#destination-input`).val().trim();
-  let firstTrainHours = $(`#first-train-hours`).val().trim();
-  let firstTrainMinutes =  $(`#first-train-minutes`).val().trim();
-  let frequency = $(`#frequency-input`).val().trim();
+  let name = $(`#train-name-input`)
+    .val()
+    .trim();
+  let destination = $(`#destination-input`)
+    .val()
+    .trim();
+  let firstTrainHours = $(`#first-train-hours`)
+    .val()
+    .trim();
+  let firstTrainMinutes = $(`#first-train-minutes`)
+    .val()
+    .trim();
+  let frequency = $(`#frequency-input`)
+    .val()
+    .trim();
 
   let myObject = {
     name: ``,
     destination: ``,
-    firstTrainTime: ``,
+    firstTrainHours: ``,
+    firstTrainMinutes: ``,
     frequency: ``,
-    valid: false,
+    valid: false
   };
 
   if (
     validateName(name) &&
     validateDestination(destination) &&
-    validateFirstTrain(firstTrainHours, firstTrainMinutes) &&
+    validateHours(firstTrainHours) &&
+    validateMinutes(firstTrainMinutes) &&
     validateFrequency(frequency)
   ) {
     myObject.name = name;
     myObject.destination = destination;
-    myObject.firstTrainTime = firstTrainHours + firstTrainMinutes;
+    myObject.firstTrainHours = firstTrainHours;
+    myObject.firstTrainMinutes = firstTrainMinutes;
     myObject.frequency = frequency;
     myObject.valid = true;
   }
@@ -146,36 +154,34 @@ var validateDestination = function(destination) {
   }
 };
 
-// var validateFirstTrain = function(first) {
-//   if (first.length == 4 && parseInt(first) > 0) {
-//     let hours = first[0] + first[1];
-//     let minutes = first[2] + first[3];
-
-//     hours = parseInt(hours);
-//     minutes = parseInt(minutes);
-
-//     if (hours > 23 || minutes > 60) {
-//       return false;
-//     } else {
-//       return true;
-//     }
-//   } else {
-//     return false;
-//   }
-// };
-
-var validateFirstTrain = function(hours, minutes) {
-  hours = parseInt(hours);
-  minutes = parseInt(minutes);
-
-  if (hours > 23 || hours < 0 || minutes > 59 || minutes < 0) {
+var validateHours = function(hours) {
+  if (
+    isNaN(hours) ||
+    hours.length === 0 ||
+    parseInt(hours) < 0 ||
+    parseInt(hours) > 23
+  ) {
     return false;
   } else {
     return true;
   }
 };
+
+var validateMinutes = function(minutes) {
+  if (
+    isNaN(minutes) ||
+    minutes.length === 0 ||
+    parseInt(minutes) < 0 ||
+    parseInt(minutes) > 59
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
 var validateFrequency = function(frequency) {
-  if (isNaN(frequency) && parseInt(frequency) > 0) {
+  if (isNaN(frequency) || frequency.length === 0 || parseInt(frequency) < 0) {
     return false;
   } else {
     return true;
