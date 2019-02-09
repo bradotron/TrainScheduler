@@ -17,6 +17,8 @@ $(function() {
   $(`#add-train-btn`).click(onAddTrainBtn);
 
   trainsRef.onSnapshot(updateCurrentTrainSchedule);
+
+  // TODO: add a setInterval that updates the train schedule every minute
 });
 
 var updateCurrentTrainSchedule = function() {
@@ -98,19 +100,30 @@ var onAddTrainBtn = function() {
 };
 
 var validateTrainForm = function() {
+  let name = $(`#train-name-input`).val().trim();
+  let destination = $(`#destination-input`).val().trim();
+  let firstTrainHours = $(`#first-train-hours`).val().trim();
+  let firstTrainMinutes =  $(`#first-train-minutes`).val().trim();
+  let frequency = $(`#frequency-input`).val().trim();
+
   let myObject = {
-    name: $(`#train-name-input`).val(),
-    destination: $(`#destination-input`).val(),
-    firstTrainTime: $(`#first-train-input`).val(),
-    frequency: $(`#frequency-input`).val(),
-    valid: false
+    name: ``,
+    destination: ``,
+    firstTrainTime: ``,
+    frequency: ``,
+    valid: false,
   };
+
   if (
-    validateName(myObject.name) &&
-    validateDestination(myObject.destination) &&
-    validateFirstTrain(myObject.firstTrainTime) &&
-    validateFrequency(myObject.frequency)
+    validateName(name) &&
+    validateDestination(destination) &&
+    validateFirstTrain(firstTrainHours, firstTrainMinutes) &&
+    validateFrequency(frequency)
   ) {
+    myObject.name = name;
+    myObject.destination = destination;
+    myObject.firstTrainTime = firstTrainHours + firstTrainMinutes;
+    myObject.frequency = frequency;
     myObject.valid = true;
   }
 
@@ -133,21 +146,32 @@ var validateDestination = function(destination) {
   }
 };
 
-var validateFirstTrain = function(first) {
-  if (first.length == 4 && parseInt(first) > 0) {
-    let hours = first[0] + first[1];
-    let minutes = first[2] + first[3];
+// var validateFirstTrain = function(first) {
+//   if (first.length == 4 && parseInt(first) > 0) {
+//     let hours = first[0] + first[1];
+//     let minutes = first[2] + first[3];
 
-    hours = parseInt(hours);
-    minutes = parseInt(minutes);
+//     hours = parseInt(hours);
+//     minutes = parseInt(minutes);
 
-    if (hours > 23 || minutes > 60) {
-      return false;
-    } else {
-      return true;
-    }
-  } else {
+//     if (hours > 23 || minutes > 60) {
+//       return false;
+//     } else {
+//       return true;
+//     }
+//   } else {
+//     return false;
+//   }
+// };
+
+var validateFirstTrain = function(hours, minutes) {
+  hours = parseInt(hours);
+  minutes = parseInt(minutes);
+
+  if (hours > 23 || hours < 0 || minutes > 59 || minutes < 0) {
     return false;
+  } else {
+    return true;
   }
 };
 var validateFrequency = function(frequency) {
