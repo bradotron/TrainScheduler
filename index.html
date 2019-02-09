@@ -21,8 +21,41 @@
     <title>Train Scheduler</title>
   </head>
   <body>
+    <nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-primary">
+      <span class="navbar-brand h3 mt-auto ml-auto mr-3 mb-auto" id="user-name">Guest</span>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#current-trains">Current Train Schedule</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#add-trains">Add Trains</a>
+          </li>
+        </ul>
+        <button class="btn btn-primary">Sign In</button>
+        </form>
+      </div>
+    </nav>
+
     <div class="container bg-primary text-white border rounded mb-3 p-0">
-      <h1 class="display-2 text-center my-5">Trains on Trains</h1>
+      <h1 class="display-2 text-center my-2">Trains on Trains</h1>
     </div>
 
     <div class="container mb-2 p-0">
@@ -33,7 +66,7 @@
       </div>
     </div>
 
-    <div class="container mb-2 p-0">
+    <div id="current-trains" class="container mb-2 p-0">
       <!-- train schedule loads here -->
       <div class="card mb-2">
         <h6 class="card-header text-white bg-primary">
@@ -53,7 +86,7 @@
         </table>
       </div>
     </div>
-    <div class="container mb-2 p-0">
+    <div hidden id="add-trains" class="container mb-2 p-0">
       <!-- form to add trains goes here -->
       <div class="card">
         <h6 class="card-header text-white bg-primary">
@@ -78,9 +111,11 @@
           />
         </div>
         <div class="form-group mx-3 mb-1">
-          <label for="first-train-input">First Train Time (Military Clock HH:MM)</label>
+          <label for="first-train-input"
+            >First Train Time (Military Clock HH:MM)</label
+          >
           <div class="d-flex align-items-center p-0">
-              <label for="first-train-hours">Hours: </label>
+            <label for="first-train-hours">Hours: </label>
             <input
               class="form-control mx-1"
               id="first-train-hours"
@@ -135,7 +170,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
 
     <!-- Add additional services that you want to use -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
     <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script> -->
     <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-firestore.js"></script>
     <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-messaging.js"></script> -->
