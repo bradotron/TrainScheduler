@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <!-- My CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <title>Train Scheduler</title>
+  </head>
+  <body>
+    <div class="container bg-primary text-white border rounded mb-3 p-0">
+      <h1 class="display-2 text-center my-5">Trains on Trains</h1>
+    </div>
+
+    <div class="container p-0">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 id="current-time-display"></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="container p-0">
+      <!-- train schedule loads here -->
+      <div class="card mb-2">
+        <h6 class="card-header text-white bg-primary">
+          Current Train Schedule
+        </h6>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Train Name</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Frequency (min)</th>
+              <th scope="col">Next Arrival</th>
+              <th scope="col">Minutes Away</th>
+            </tr>
+          </thead>
+          <tbody id="current-train-schedule"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="container p-0">
+      <!-- form to add trains goes here -->
+      <div class="card">
+        <h6 class="card-header text-white bg-primary">
+          Add Another Scheduled Train
+        </h6>
+        <div class="form-group mx-3 mb-1">
+          <label for="train-name-input">Train Name</label>
+          <input
+            class="form-control"
+            id="train-name-input"
+            type="text"
+            placeholder="Enter Train Name"
+          />
+        </div>
+        <div class="form-group mx-3 mb-1">
+          <label for="destination-input">Destination</label>
+          <input
+            class="form-control"
+            id="destination-input"
+            type="text"
+            placeholder="Enter Destination Name"
+          />
+        </div>
+        <div class="form-group mx-3 mb-1">
+          <label for="first-train-input">First Train Time</label>
+          <input
+            class="form-control"
+            id="first-train-input"
+            type="text"
+            placeholder="Enter the first arrival  in Military Time: HHMM"
+          />
+        </div>
+        <div class="form-group mx-3 mb-1">
+          <label for="frequency-input">Train Frequency</label>
+          <input
+            class="form-control"
+            id="frequency-input"
+            type="text"
+            placeholder="Enter Train Arrival Frequency in Minutes"
+          />
+        </div>
+        <div class="form-group mx-3 mb-1">
+          <button id="add-train-btn" class="btn btn-primary">Add Train</button>
+        </div>
+        <div id="add-train-message" class="container"></div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Firebase -->
+    <!-- Firebase App is always required and must be first -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-firestore.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-messaging.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-functions.js"></script> -->
+    <!-- my javascript -->
+
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <!-- my apps js -->
+    <script src="assets/javascript/main.js"></script>
+  </body>
+</html>
