@@ -1,0 +1,6 @@
+.user-pic {
+  height: 3rem;
+  min-height: 25px;
+  border-radius: 50%;
+  margin: 0 1rem 0 0;
+}

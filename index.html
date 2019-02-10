@@ -22,6 +22,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-primary">
+      <img id="user-pic" class="user-pic" hidden src="">
       <span class="navbar-brand h3 mt-auto ml-auto mr-3 mb-auto" id="user-name">Guest</span>
       <button
         class="navbar-toggler"
@@ -46,10 +47,11 @@
             <a class="nav-link" href="#current-trains">Current Train Schedule</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#add-trains">Add Trains</a>
+            <a class="nav-link" id="add-trains-link" href="#add-trains">Add Trains</a>
           </li>
         </ul>
-        <button class="btn btn-primary">Sign In</button>
+        <button id="sign-in-btn" class="btn btn-primary">Sign In</button>
+        <button id="sign-out-btn" disabled hidden class="btn btn-primary">Sign Out</button>
         </form>
       </div>
     </nav>
